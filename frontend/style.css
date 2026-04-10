@@ -199,63 +199,144 @@ h2 {
 
 .time-icon { font-size: 1.3rem; }
 
-/* ===== ADVENTURERS SHIELD LOGO ===== */
+/* ===== SDA ADVENTURERS LOGO ===== */
+/* Official colors: Blue #003DA5 (heaven), Green #43B02A (growth),
+   Scarlet #8B1A1A (Christ's blood), White (purity) */
+
 .shield-logo {
     margin-bottom: 18px;
     display: inline-block;
 }
 
 .shield {
-    width: 110px;
+    width: 130px;
     height: 130px;
-    margin: 0 auto 8px;
-    background: linear-gradient(180deg, #ffd54f 0%, #ffb300 50%, #ff8f00 100%);
-    border-radius: 10px 10px 55px 55px;
+    margin: 0 auto 10px;
+    background: linear-gradient(180deg, #003DA5 0%, #002878 100%);
+    border-radius: 50%;
     position: relative;
-    box-shadow: 0 6px 25px rgba(255,143,0,0.35), inset 0 2px 4px rgba(255,255,255,0.4);
-    border: 4px solid #e65100;
+    box-shadow: 0 6px 25px rgba(0,61,165,0.4), inset 0 2px 4px rgba(255,255,255,0.2);
+    border: 4px solid #43B02A;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    overflow: hidden;
 }
 
+/* green hills at bottom */
 .shield::before {
     content: '';
     position: absolute;
-    top: 4px; left: 4px; right: 4px; bottom: 4px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 8px 8px 50px 50px;
-    pointer-events: none;
+    bottom: 0; left: -10px; right: -10px;
+    height: 45px;
+    background: radial-gradient(ellipse at 30% 0%, #43B02A 0%, #2e8b20 100%);
+    border-radius: 50% 50% 0 0;
+}
+
+/* nature path */
+.shield::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 35px;
+    background: linear-gradient(180deg, #8B6914, #c49a2a);
+    border-radius: 8px 8px 0 0;
+    opacity: 0.6;
 }
 
 .shield-cross {
-    font-size: 2.8rem;
-    color: #b71c1c;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-size: 1.8rem;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.3);
     line-height: 1;
-    margin-top: 5px;
+    margin-top: -8px;
     font-weight: 800;
+    z-index: 1;
 }
 
-.shield-dove {
-    font-size: 1.6rem;
+.shield-figures {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    z-index: 1;
     margin-top: 2px;
 }
 
+/* Adult silhouette */
+.figure-adult {
+    width: 14px;
+    height: 30px;
+    background: #fff;
+    border-radius: 7px 7px 4px 4px;
+    position: relative;
+}
+
+.figure-adult::before {
+    content: '';
+    position: absolute;
+    top: -8px; left: 50%;
+    transform: translateX(-50%);
+    width: 10px; height: 10px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+/* Child silhouette */
+.figure-child {
+    width: 10px;
+    height: 20px;
+    background: #fff;
+    border-radius: 5px 5px 3px 3px;
+    position: relative;
+}
+
+.figure-child::before {
+    content: '';
+    position: absolute;
+    top: -6px; left: 50%;
+    transform: translateX(-50%);
+    width: 8px; height: 8px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+/* Tree silhouettes */
+.shield-tree-left,
+.shield-tree-right {
+    position: absolute;
+    bottom: 22px;
+    z-index: 0;
+}
+
+.shield-tree-left {
+    left: 14px;
+    font-size: 1.4rem;
+    color: rgba(67,176,42,0.7);
+}
+
+.shield-tree-right {
+    right: 14px;
+    font-size: 1.1rem;
+    color: rgba(67,176,42,0.6);
+}
+
 .shield-banner {
-    background: linear-gradient(135deg, #b71c1c, #d32f2f);
+    background: linear-gradient(135deg, #003DA5, #0050d4);
     color: #fff;
     font-family: 'Baloo 2', cursive;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 800;
     letter-spacing: 3px;
     text-transform: uppercase;
-    padding: 6px 22px;
+    padding: 6px 24px;
     border-radius: 6px;
-    box-shadow: 0 3px 10px rgba(183,28,28,0.3);
+    box-shadow: 0 3px 12px rgba(0,61,165,0.35);
     position: relative;
-    margin-top: -2px;
+    border: 2px solid #43B02A;
 }
 
 .shield-banner::before,
@@ -264,36 +345,36 @@ h2 {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 0.7rem;
-    color: #ffd54f;
+    font-size: 0.65rem;
+    color: #43B02A;
 }
 
-.shield-banner::before { left: 6px; }
-.shield-banner::after { right: 6px; }
+.shield-banner::before { left: 5px; }
+.shield-banner::after { right: 5px; }
 
 /* Small badge version for other pages */
 .page-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: linear-gradient(135deg, #ffd54f, #ffb300);
-    border: 2px solid #e65100;
+    background: linear-gradient(135deg, #003DA5, #0050d4);
+    border: 2px solid #43B02A;
     border-radius: 50px;
     padding: 4px 14px 4px 6px;
     margin-bottom: 8px;
 }
 
 .page-badge .mini-shield {
-    width: 26px;
-    height: 30px;
-    background: linear-gradient(180deg, #ffd54f, #ff8f00);
-    border-radius: 4px 4px 13px 13px;
-    border: 2px solid #e65100;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(180deg, #003DA5, #002878);
+    border-radius: 50%;
+    border: 2px solid #43B02A;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8rem;
-    color: #b71c1c;
+    font-size: 0.7rem;
+    color: #fff;
     font-weight: 800;
 }
 
@@ -303,7 +384,7 @@ h2 {
     font-weight: 800;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #b71c1c;
+    color: #fff;
 }
 
 .group-welcome {
