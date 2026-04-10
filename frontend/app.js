@@ -4,6 +4,8 @@
 
 var LETTERS = ['A', 'B', 'C', 'D'];
 var COUNTDOWN_SECONDS = 3;
+var highlightedOption = -1; // tracks which quiz option is highlighted by presenter
+var readyToConfirm = false; // true after cycling through all options
 
 // ===== EMBEDDED STORY DATA =====
 var storyData = {
@@ -339,6 +341,8 @@ function runCountdown(seconds, callback) {
 }
 
 function showOptions(q) {
+    highlightedOption = -1;
+    readyToConfirm = false;
     var html = '';
     q.options.forEach(function (opt, i) {
         html += '<button class="option-btn" onclick="pickAnswer(' + i + ')">';
@@ -346,6 +350,17 @@ function showOptions(q) {
         html += opt + '</button>';
     });
     document.getElementById('optionsList').innerHTML = html;
+}
+
+function updateOptionHighlight(opts) {
+    for (var i = 0; i < opts.length; i++) {
+        if (i === highlightedOption) {
+            opts[i].classList.add('highlighted');
+            opts[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            opts[i].classList.remove('highlighted');
+        }
+    }
 }
 
 function updateStreakDisplay() {
@@ -817,7 +832,29 @@ function handleNext(page) {
         case 'quizPage':
             var nextBtn = document.querySelector('.quiz-next-btn');
             if (nextBtn) {
+                // Explanation showing — move to next question
+                highlightedOption = -1;
                 nextQuestion();
+            } else {
+                var opts = document.querySelectorAll('.option-btn');
+                if (opts.length > 0 && !opts[0].disabled) {
+                    if (readyToConfirm) {
+                        // Second press after cycling — confirm selection
+                        pickAnswer(highlightedOption);
+                        highlightedOption = -1;
+                        readyToConfirm = false;
+                    } else if (highlightedOption >= opts.length - 1) {
+                        // Reached last option — next press will confirm
+                        readyToConfirm = true;
+                        // Keep last option highlighted, scroll to show it
+                        opts[highlightedOption].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        // Cycle to next option
+                        highlightedOption++;
+                        updateOptionHighlight(opts);
+                        readyToConfirm = false;
+                    }
+                }
             }
             break;
 
