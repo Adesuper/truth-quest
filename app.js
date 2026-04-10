@@ -4,8 +4,74 @@
 
 var LETTERS = ['A', 'B', 'C', 'D'];
 var COUNTDOWN_SECONDS = 3;
-var highlightedOption = -1; // tracks which quiz option is highlighted by presenter
-var readyToConfirm = false; // true after cycling through all options
+var highlightedOption = -1;
+var readyToConfirm = false;
+
+// ===== SOUND EFFECTS (Web Audio API — no files needed) =====
+var audioCtx = null;
+
+function getAudioCtx() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioCtx;
+}
+
+function playTone(freq, duration, type, volume) {
+    try {
+        var ctx = getAudioCtx();
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = type || 'sine';
+        osc.frequency.value = freq;
+        gain.gain.value = volume || 0.3;
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + duration);
+    } catch (e) { /* audio not supported — silent fallback */ }
+}
+
+function soundChime() {
+    playTone(523, 0.15, 'sine', 0.25);
+    setTimeout(function () { playTone(659, 0.15, 'sine', 0.25); }, 120);
+    setTimeout(function () { playTone(784, 0.25, 'sine', 0.25); }, 240);
+}
+
+function soundCorrect() {
+    playTone(523, 0.12, 'sine', 0.3);
+    setTimeout(function () { playTone(659, 0.12, 'sine', 0.3); }, 100);
+    setTimeout(function () { playTone(784, 0.3, 'sine', 0.3); }, 200);
+}
+
+function soundWrong() {
+    playTone(300, 0.2, 'triangle', 0.2);
+    setTimeout(function () { playTone(250, 0.3, 'triangle', 0.2); }, 180);
+}
+
+function soundTick() {
+    playTone(800, 0.08, 'square', 0.12);
+}
+
+function soundGo() {
+    playTone(523, 0.1, 'sine', 0.3);
+    setTimeout(function () { playTone(784, 0.25, 'sine', 0.3); }, 80);
+}
+
+function soundCelebration() {
+    var notes = [523, 587, 659, 698, 784, 880, 988, 1047];
+    notes.forEach(function (note, i) {
+        setTimeout(function () {
+            playTone(note, 0.2, 'sine', 0.2);
+        }, i * 80);
+    });
+}
+
+function soundPledgeLine() {
+    playTone(440, 0.15, 'sine', 0.2);
+    setTimeout(function () { playTone(554, 0.2, 'sine', 0.2); }, 130);
+}
 
 // ===== EMBEDDED STORY DATA =====
 var storyData = {
@@ -324,6 +390,7 @@ function runCountdown(seconds, callback) {
     var numEl = document.getElementById('countdownNum');
     var count = seconds;
     numEl.textContent = count;
+    soundTick();
 
     var timer = setInterval(function () {
         count--;
@@ -332,9 +399,11 @@ function runCountdown(seconds, callback) {
             numEl.style.animation = 'none';
             numEl.offsetHeight;
             numEl.style.animation = 'countPulse 1s ease-in-out infinite';
+            soundTick();
         } else {
             clearInterval(timer);
             numEl.textContent = 'GO!';
+            soundGo();
             setTimeout(callback, 400);
         }
     }, 1000);
@@ -368,6 +437,7 @@ function revealCorrectAnswer() {
 
     document.getElementById('explanationBox').innerHTML = eHtml;
     launchMiniConfetti();
+    soundCorrect();
 }
 
 function showOptions(q) {
@@ -440,7 +510,8 @@ function pickAnswer(index) {
 
     document.getElementById('explanationBox').innerHTML = eHtml;
 
-    if (isCorrect) launchMiniConfetti();
+    if (isCorrect) { launchMiniConfetti(); soundCorrect(); }
+    else { soundWrong(); }
 }
 
 function nextQuestion() {
@@ -501,6 +572,7 @@ function calculateScore() {
     renderResults(result);
     showPage('resultsPage');
     launchCelebration();
+    soundCelebration();
 }
 
 function renderResults(r) {
@@ -566,11 +638,11 @@ function renderResults(r) {
 // ========================================
 function revealDiscuss(num) {
     document.getElementById('discussAns' + num).style.display = 'block';
-    // Hide the reveal button
     var btn = document.getElementById('discussAns' + num).previousElementSibling;
     if (btn && btn.classList.contains('btn-reveal')) {
         btn.style.display = 'none';
     }
+    soundChime();
 }
 
 // ========================================
@@ -600,14 +672,15 @@ function revealVerse(num) {
     document.getElementById('revealed' + num).style.display = 'block';
     document.getElementById('reveal' + num).style.display = 'none';
     launchMiniConfetti();
+    soundChime();
 }
 
 function markAttempt(num) {
     var btn = document.getElementById('attempt' + num);
     btn.classList.add('done');
     btn.textContent = '✓';
-    if (num === 3) launchCelebration();
-    else launchMiniConfetti();
+    if (num === 3) { launchCelebration(); soundCelebration(); }
+    else { launchMiniConfetti(); soundChime(); }
 }
 
 // ========================================
@@ -647,6 +720,7 @@ function nextPledgeLine() {
     if (pledgeLineIndex < 5) {
         document.getElementById('pledgeLine' + (pledgeLineIndex + 1)).classList.remove('active');
         document.getElementById('pledgeLine' + (pledgeLineIndex + 1)).classList.add('read');
+        soundPledgeLine();
     }
     pledgeLineIndex++;
     if (pledgeLineIndex < 5) {
@@ -656,6 +730,7 @@ function nextPledgeLine() {
         document.getElementById('closingPrayer').style.display = '';
         document.getElementById('finalActions').style.display = '';
         launchCelebration();
+        soundCelebration();
     }
 }
 
