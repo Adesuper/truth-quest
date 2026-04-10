@@ -74,24 +74,64 @@ function soundPledgeLine() {
 }
 
 // ===== TEXT-TO-SPEECH =====
+var speechWarmedUp = false;
+
+function warmUpSpeech() {
+    // Browsers require a user gesture before allowing speech.
+    // This runs a silent utterance on the first click to unlock it.
+    if (speechWarmedUp) return;
+    if ('speechSynthesis' in window) {
+        var silent = new SpeechSynthesisUtterance('');
+        silent.volume = 0;
+        window.speechSynthesis.speak(silent);
+        speechWarmedUp = true;
+    }
+}
+
 function speakText(text, callback) {
     try {
         if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel(); // stop any current speech
-            var utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = 0.85; // slightly slower for kids
-            utterance.pitch = 1.1; // slightly higher, friendly tone
-            utterance.volume = 1.0;
-            if (callback) {
-                utterance.onend = callback;
-            }
-            window.speechSynthesis.speak(utterance);
+            window.speechSynthesis.cancel();
+            // Small delay after cancel to prevent Chrome from dropping the speech
+            setTimeout(function () {
+                var utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;
+                utterance.pitch = 1.1;
+                utterance.volume = 1.0;
+                // Try to pick a good English voice
+                var voices = window.speechSynthesis.getVoices();
+                for (var i = 0; i < voices.length; i++) {
+                    if (voices[i].lang.indexOf('en') === 0 && voices[i].name.indexOf('Female') >= 0) {
+                        utterance.voice = voices[i];
+                        break;
+                    }
+                }
+                if (callback) {
+                    utterance.onend = callback;
+                    // Safety timeout in case onend never fires
+                    var safetyTimer = setTimeout(function () {
+                        callback();
+                    }, 8000);
+                    utterance.onend = function () {
+                        clearTimeout(safetyTimer);
+                        callback();
+                    };
+                }
+                window.speechSynthesis.speak(utterance);
+            }, 100);
         } else if (callback) {
-            callback(); // fallback if speech not supported
+            callback();
         }
     } catch (e) {
         if (callback) callback();
     }
+}
+
+// Load voices as soon as they're available
+if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = function () {
+        window.speechSynthesis.getVoices();
+    };
 }
 
 // ===== EMBEDDED STORY DATA =====
@@ -240,7 +280,10 @@ function goHome() { showPage('welcomePage'); }
 // ========================================
 //  LESSON INTRO
 // ========================================
-function goToLesson() { showPage('lessonPage'); }
+function goToLesson() {
+    warmUpSpeech(); // unlock speech on first user click
+    showPage('lessonPage');
+}
 
 // ========================================
 //  STORY
