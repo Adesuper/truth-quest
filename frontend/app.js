@@ -340,6 +340,36 @@ function runCountdown(seconds, callback) {
     }, 1000);
 }
 
+function revealCorrectAnswer() {
+    var q = quizData[currentQ];
+    var correctIdx = q.correctAnswerIndex;
+
+    // Record as correct for scoring (presenter mode = group got it right)
+    answers.push({ questionId: q.id, selectedOption: correctIdx });
+    streak++;
+    if (streak > bestStreak) bestStreak = streak;
+    updateStreakDisplay();
+
+    // Highlight the correct answer
+    var buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(function (btn, i) {
+        btn.disabled = true;
+        btn.onclick = null;
+        if (i === correctIdx) btn.classList.add('correct');
+    });
+
+    // Show explanation
+    var eHtml = '<div class="explain-box right">';
+    eHtml += '🎉 The answer is <strong>' + LETTERS[correctIdx] + '</strong>! ' + q.explanation;
+    eHtml += '<br><span class="bible-tag">📖 ' + q.bibleReference + '</span></div>';
+
+    var btnLabel = currentQ < quizData.length - 1 ? 'Next Question ➡' : '🏆 See Our Results!';
+    eHtml += '<button class="btn btn-go quiz-next-btn" onclick="nextQuestion()">' + btnLabel + '</button>';
+
+    document.getElementById('explanationBox').innerHTML = eHtml;
+    launchMiniConfetti();
+}
+
 function showOptions(q) {
     highlightedOption = -1;
     readyToConfirm = false;
@@ -833,27 +863,12 @@ function handleNext(page) {
             var nextBtn = document.querySelector('.quiz-next-btn');
             if (nextBtn) {
                 // Explanation showing — move to next question
-                highlightedOption = -1;
                 nextQuestion();
             } else {
+                // Options visible — reveal the correct answer immediately
                 var opts = document.querySelectorAll('.option-btn');
                 if (opts.length > 0 && !opts[0].disabled) {
-                    if (readyToConfirm) {
-                        // Second press after cycling — confirm selection
-                        pickAnswer(highlightedOption);
-                        highlightedOption = -1;
-                        readyToConfirm = false;
-                    } else if (highlightedOption >= opts.length - 1) {
-                        // Reached last option — next press will confirm
-                        readyToConfirm = true;
-                        // Keep last option highlighted, scroll to show it
-                        opts[highlightedOption].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    } else {
-                        // Cycle to next option
-                        highlightedOption++;
-                        updateOptionHighlight(opts);
-                        readyToConfirm = false;
-                    }
+                    revealCorrectAnswer();
                 }
             }
             break;
