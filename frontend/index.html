@@ -56,6 +56,10 @@
         <button class="btn btn-go btn-xl wiggle" onclick="goToLesson()">
             🚀 Let's Go!
         </button>
+
+        <button class="btn btn-fullscreen" onclick="toggleFullscreen()">
+            🖥️ Full Screen
+        </button>
     </div>
 </div>
 
@@ -416,9 +420,60 @@
                 <p>You are <strong>Truth Champions</strong> who follow Jesus! Remember — always choose truth!</p>
             </div>
             <div class="result-actions">
+                <button class="btn btn-go btn-xl" onclick="goToCertificate()">🏅 Print Certificates!</button>
                 <button class="btn btn-truth" onclick="restartStory()">📖 Hear the Story Again</button>
-                <button class="btn btn-go" onclick="restartQuiz()">🧠 Retake the Quiz</button>
                 <button class="btn btn-nav" onclick="goHome()">🏠 Back to Start</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 9: PRINTABLE CERTIFICATE ==================== -->
+<div id="certPage" class="page">
+    <div class="container">
+        <div class="cert-header">
+            <div class="page-badge"><span class="mini-shield">✝</span><span class="badge-text">Adventurers</span></div>
+            <h1>🏅 Certificates</h1>
+            <p class="cert-sub">Print these and let each child write their name!</p>
+        </div>
+
+        <button class="btn btn-go btn-xl" onclick="printCertificate()">🖨️ Print Certificates</button>
+        <p class="cert-tip">Tip: Print as many copies as you need. Each child fills in their own name.</p>
+
+        <div class="result-actions" style="margin-top: 20px;">
+            <button class="btn btn-nav" onclick="goHome()">🏠 Back to Start</button>
+        </div>
+    </div>
+
+    <!-- This is the printable certificate (hidden on screen, visible when printing) -->
+    <div id="certificateTemplate" class="certificate">
+        <div class="cert-border">
+            <div class="cert-inner">
+                <div class="cert-logo-area">
+                    <span class="cert-cross">✝</span>
+                </div>
+                <p class="cert-presents">The Adventurer Club Presents This</p>
+                <h1 class="cert-title-text">Certificate of Achievement</h1>
+                <div class="cert-badge-title">Truth Champion</div>
+                <p class="cert-awarded">Awarded to</p>
+                <div class="cert-name-line"></div>
+                <p class="cert-for">For completing <strong>Truth Quest: Walking with Jesus</strong></p>
+                <p class="cert-for">Learning the 9th Commandment and the value of honesty</p>
+                <div class="cert-verses">
+                    <p>"You shall not give false testimony against your neighbor." — <strong>Exodus 20:16</strong></p>
+                    <p>"I am the way and the truth and the life." — <strong>John 14:6</strong></p>
+                </div>
+                <div class="cert-bottom">
+                    <div class="cert-sign">
+                        <div class="cert-sign-line"></div>
+                        <p>Leader's Signature</p>
+                    </div>
+                    <div class="cert-date-area">
+                        <div class="cert-sign-line"></div>
+                        <p>Date</p>
+                    </div>
+                </div>
+                <p class="cert-motto">★ Jesus is the Way, the Truth, and the Life ★</p>
             </div>
         </div>
     </div>

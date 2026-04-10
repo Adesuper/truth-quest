@@ -1497,6 +1497,218 @@ h2 {
     line-height: 1.6;
 }
 
+/* ===== FULL-SCREEN BUTTON ===== */
+.btn-fullscreen {
+    display: block;
+    margin: 16px auto 0;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8);
+    border: 2px solid rgba(255,255,255,0.3);
+    font-size: 0.9rem;
+    padding: 10px 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Quicksand', inherit;
+    font-weight: 600;
+    transition: all 0.25s;
+}
+
+.btn-fullscreen:hover {
+    background: rgba(255,255,255,0.25);
+    color: #fff;
+}
+
+/* ===== CERTIFICATE PAGE ===== */
+.cert-header { margin-bottom: 10px; }
+
+.cert-sub {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+}
+
+.cert-tip {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* Certificate template — hidden on screen, shown only when printing */
+.certificate {
+    display: none;
+}
+
+@media print {
+    /* Hide everything except the certificate */
+    body * {
+        visibility: hidden;
+    }
+
+    .certificate,
+    .certificate * {
+        visibility: visible !important;
+        display: block !important;
+    }
+
+    .certificate {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 99999;
+        background: #fff;
+    }
+
+    .page, .floating-bg, #confettiCanvas {
+        display: none !important;
+    }
+}
+
+.cert-border {
+    border: 6px double #003DA5;
+    margin: 20px;
+    padding: 8px;
+    min-height: calc(100vh - 40px);
+}
+
+.cert-inner {
+    border: 2px solid #43B02A;
+    padding: 40px 30px;
+    text-align: center;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Georgia, serif;
+}
+
+.cert-logo-area {
+    width: 70px; height: 70px;
+    background: linear-gradient(180deg, #003DA5, #002878);
+    border-radius: 50%;
+    border: 3px solid #43B02A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.cert-cross {
+    font-size: 2rem;
+    color: #fff;
+    font-weight: 800;
+}
+
+.cert-presents {
+    font-size: 0.9rem;
+    color: #666;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.cert-title-text {
+    font-family: 'Baloo 2', Georgia, serif;
+    font-size: 2.2rem;
+    color: #003DA5;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.cert-badge-title {
+    background: linear-gradient(135deg, #003DA5, #0050d4);
+    color: #fff;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 28px;
+    border-radius: 50px;
+    border: 2px solid #43B02A;
+    margin-bottom: 20px;
+}
+
+.cert-awarded {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.cert-name-line {
+    width: 320px;
+    max-width: 80%;
+    height: 2px;
+    border-bottom: 3px solid #003DA5;
+    margin: 0 auto 8px;
+}
+
+.cert-for {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 2px;
+}
+
+.cert-verses {
+    margin: 20px 0;
+    padding: 15px 20px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.cert-verses p {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+    margin: 4px 0;
+}
+
+.cert-bottom {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin: 25px 0 15px;
+    width: 100%;
+    max-width: 450px;
+}
+
+.cert-sign {
+    text-align: center;
+    flex: 1;
+}
+
+.cert-date-area {
+    text-align: center;
+    flex: 1;
+}
+
+.cert-sign-line {
+    width: 100%;
+    border-bottom: 2px solid #333;
+    margin-bottom: 5px;
+    height: 25px;
+}
+
+.cert-sign p,
+.cert-date-area p {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cert-motto {
+    font-size: 0.8rem;
+    color: #003DA5;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {
     h1 { font-size: 2.2rem; }
