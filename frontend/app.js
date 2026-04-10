@@ -753,7 +753,26 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+// Auto-scroll: if page has more content below, scroll down first.
+// Only navigate to the next page when already at the bottom.
+function isNearBottom() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var windowHeight = window.innerHeight;
+    var docHeight = document.documentElement.scrollHeight;
+    return (scrollTop + windowHeight) >= (docHeight - 80);
+}
+
+function smoothScrollDown() {
+    window.scrollBy({ top: window.innerHeight * 0.7, behavior: 'smooth' });
+}
+
 function handleNext(page) {
+    // If there's content below the fold, scroll down first
+    if (!isNearBottom()) {
+        smoothScrollDown();
+        return;
+    }
+
     switch (page) {
         case 'welcomePage':
             goToLesson();
@@ -764,7 +783,6 @@ function handleNext(page) {
             break;
 
         case 'storyPage':
-            // If choice buttons are visible, choose truth by default
             var choiceBtns = document.getElementById('choiceButtons');
             if (choiceBtns && choiceBtns.style.display === 'flex') {
                 showOutcome('truth');
@@ -774,7 +792,6 @@ function handleNext(page) {
             break;
 
         case 'discussPage':
-            // First reveal all unrevealed answers, then proceed to quiz
             var unrevealed = document.querySelectorAll('#discussPage .btn-reveal');
             var hasUnrevealed = false;
             for (var i = 0; i < unrevealed.length; i++) {
@@ -782,13 +799,22 @@ function handleNext(page) {
             }
             if (hasUnrevealed) {
                 revealNextDiscuss();
+                // Scroll to the revealed answer
+                setTimeout(function () {
+                    var answers = document.querySelectorAll('#discussPage .discuss-answer');
+                    for (var j = answers.length - 1; j >= 0; j--) {
+                        if (answers[j].style.display !== 'none') {
+                            answers[j].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            break;
+                        }
+                    }
+                }, 100);
             } else {
                 startQuiz();
             }
             break;
 
         case 'quizPage':
-            // If explanation is showing, click next question button
             var nextBtn = document.querySelector('.quiz-next-btn');
             if (nextBtn) {
                 nextQuestion();
@@ -800,7 +826,6 @@ function handleNext(page) {
             break;
 
         case 'memoryPage':
-            // Reveal verses first, then go to pledge
             var rev1 = document.getElementById('reveal1');
             var rev2 = document.getElementById('reveal2');
             if (rev1 && rev1.style.display !== 'none') {
@@ -821,7 +846,20 @@ function handleNext(page) {
     }
 }
 
+function handlePrevScroll(page) {
+    // If not at the top, scroll up first before going to previous page
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop > 100) {
+        window.scrollBy({ top: -(window.innerHeight * 0.7), behavior: 'smooth' });
+        return true;
+    }
+    return false;
+}
+
 function handlePrev(page) {
+    // Scroll up first if not at top
+    if (handlePrevScroll(page)) return;
+
     switch (page) {
         case 'lessonPage':
             goHome();
