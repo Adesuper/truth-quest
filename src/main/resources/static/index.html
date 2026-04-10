@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth Quest - Learn About Truth with Jesus!</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- ============ WELCOME SCREEN ============ -->
+<section id="welcome-screen" class="screen active">
+    <div class="container welcome-container">
+        <div class="welcome-glow"></div>
+        <h1 class="title-main">Truth Quest</h1>
+        <p class="subtitle">A Journey of Truth with Jesus</p>
+        <div class="verse-banner">
+            <p>"I am the way and the <strong>truth</strong> and the life."</p>
+            <span>— Jesus (John 14:6)</span>
+        </div>
+        <div class="welcome-input">
+            <label for="player-name">What's your name, friend?</label>
+            <input type="text" id="player-name" placeholder="Type your name here..." maxlength="30">
+        </div>
+        <button class="btn btn-start" onclick="startAdventure()">Start the Adventure!</button>
+    </div>
+</section>
+
+<!-- ============ STORY SCREEN ============ -->
+<section id="story-screen" class="screen">
+    <div class="container">
+        <nav class="top-nav">
+            <button class="btn btn-small btn-back" onclick="goHome()">Home</button>
+            <span class="nav-title">The Story</span>
+            <span class="scene-counter" id="scene-counter"></span>
+        </nav>
+        <div id="story-area">
+            <h2 id="story-title" class="story-title"></h2>
+            <p id="story-intro" class="story-intro"></p>
+            <div id="scene-content" class="scene-card"></div>
+            <div id="story-verses" class="verses-box"></div>
+            <div id="story-moral" class="moral-box"></div>
+        </div>
+        <div class="story-nav">
+            <button class="btn btn-nav" id="btn-prev" onclick="prevScene()">Back</button>
+            <button class="btn btn-nav btn-primary" id="btn-next" onclick="nextScene()">Next</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============ QUIZ SCREEN ============ -->
+<section id="quiz-screen" class="screen">
+    <div class="container">
+        <nav class="top-nav">
+            <button class="btn btn-small btn-back" onclick="goHome()">Home</button>
+            <span class="nav-title">Truth or Lie Quiz</span>
+            <span class="quiz-progress" id="quiz-progress"></span>
+        </nav>
+        <div id="quiz-area">
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="quiz-progress-bar"></div>
+            </div>
+            <div class="quiz-card" id="quiz-card">
+                <p class="question-number" id="question-number"></p>
+                <h3 class="question-text" id="question-text"></h3>
+                <div class="options-list" id="options-list"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ RESULTS SCREEN ============ -->
+<section id="results-screen" class="screen">
+    <div class="container">
+        <nav class="top-nav">
+            <button class="btn btn-small btn-back" onclick="goHome()">Home</button>
+            <span class="nav-title">Your Results</span>
+            <span></span>
+        </nav>
+        <div id="results-area" class="results-area">
+            <div class="score-circle" id="score-circle">
+                <span class="score-number" id="score-number">0%</span>
+            </div>
+            <h2 class="results-message" id="results-message"></h2>
+            <p class="results-encouragement" id="results-encouragement"></p>
+            <div class="results-verse" id="results-verse"></div>
+            <div class="feedback-list" id="feedback-list"></div>
+            <div class="results-actions">
+                <button class="btn btn-primary" onclick="goToQuiz()">Try Again</button>
+                <button class="btn btn-secondary" onclick="goToStory()">Read Story Again</button>
+                <button class="btn btn-start" onclick="goHome()">Home</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
