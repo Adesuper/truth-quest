@@ -262,6 +262,15 @@ var encouragements = [
     '⭐ Every answer helps us grow!'
 ];
 
+// ===== FULL SCREEN =====
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(function () {});
+    } else {
+        document.exitFullscreen();
+    }
+}
+
 // ===== PAGE SWITCHING =====
 function showPage(id) {
     document.querySelectorAll('.page').forEach(function (p) {
@@ -818,6 +827,17 @@ function nextPledgeLine() {
 }
 
 // ========================================
+//  CERTIFICATE
+// ========================================
+function goToCertificate() {
+    showPage('certPage');
+}
+
+function printCertificate() {
+    window.print();
+}
+
+// ========================================
 //  CONFETTI
 // ========================================
 var confettiPieces = [];
@@ -1051,7 +1071,13 @@ function handleNext(page) {
             var readBtn = document.getElementById('pledgeReadBtn');
             if (readBtn && readBtn.style.display !== 'none') {
                 readBtn.onclick();
+            } else {
+                goToCertificate();
             }
+            break;
+
+        case 'certPage':
+            printCertificate();
             break;
     }
 }
@@ -1094,6 +1120,9 @@ function handlePrev(page) {
             break;
         case 'pledgePage':
             goToMemoryVerse();
+            break;
+        case 'certPage':
+            showPage('pledgePage');
             break;
     }
 }
