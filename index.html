@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth Quest: Walking with Jesus</title>
+    <!-- Google Fonts: loads pretty fonts with internet, falls back to Arial/Segoe UI offline -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" onerror="">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- floating background decorations -->
+<div class="floating-bg">
+    <span class="floater f1">✨</span>
+    <span class="floater f2">⭐</span>
+    <span class="floater f3">🌈</span>
+    <span class="floater f4">☁️</span>
+    <span class="floater f5">💛</span>
+    <span class="floater f6">✨</span>
+    <span class="floater f7">⭐</span>
+    <span class="floater f8">☁️</span>
+</div>
+
+<!-- confetti canvas -->
+<canvas id="confettiCanvas"></canvas>
+
+<!-- ==================== PAGE 1: WELCOME ==================== -->
+<div id="welcomePage" class="page active">
+    <div class="container">
+        <div class="welcome-icon bounce">🕊️</div>
+        <h1 class="title-glow">Truth Quest</h1>
+        <p class="tagline">A Journey of Truth with Jesus</p>
+
+        <div class="hero-verse pulse-border">
+            <span class="big-quote">"</span>
+            <p>I am the way and the <strong>truth</strong> and the life.</p>
+            <span class="verse-ref">— Jesus (John 14:6)</span>
+        </div>
+
+        <p class="group-welcome">Welcome, Adventurers! Are you ready to learn about <strong>truth</strong> with Jesus?</p>
+
+        <button class="btn btn-go btn-xl wiggle" onclick="goToLesson()">
+            🚀 Let's Go!
+        </button>
+    </div>
+</div>
+
+<!-- ==================== PAGE 2: LESSON INTRO ==================== -->
+<div id="lessonPage" class="page">
+    <div class="container">
+        <div class="lesson-header">
+            <span class="lesson-icon bounce">📖</span>
+            <h1>Before We Begin...</h1>
+            <p class="lesson-sub">Alright Adventurers, let's learn something really important today!</p>
+        </div>
+
+        <div class="lesson-card card-blue">
+            <div class="lesson-card-icon">🏔️</div>
+            <h3>The 9th Commandment</h3>
+            <p class="lesson-verse-text">"You shall not give false testimony against your neighbor."</p>
+            <span class="verse-ref">— Exodus 20:16</span>
+            <p class="lesson-explain">This means: <strong>Do not lie.</strong> God wants us to always tell the truth, even when it feels hard or scary.</p>
+        </div>
+
+        <div class="lesson-card card-gold">
+            <div class="lesson-card-icon">🤔</div>
+            <h3>Why Does Truth Matter?</h3>
+            <ul class="lesson-list">
+                <li><span class="li-icon">💙</span> <strong>Truth builds trust</strong> — When we're honest, people can believe in us</li>
+                <li><span class="li-icon">🤝</span> <strong>Truth builds friendships</strong> — Real friends tell each other the truth</li>
+                <li><span class="li-icon">😌</span> <strong>Truth gives us peace</strong> — No guilt, no hiding, no worry</li>
+                <li><span class="li-icon">✝️</span> <strong>Truth follows Jesus</strong> — Jesus IS the truth (John 14:6)!</li>
+            </ul>
+        </div>
+
+        <div class="lesson-card card-purple">
+            <div class="lesson-card-icon">💔</div>
+            <h3>What Happens When We Lie?</h3>
+            <ul class="lesson-list">
+                <li><span class="li-icon">😟</span> It <strong>breaks trust</strong> — People stop believing us</li>
+                <li><span class="li-icon">😣</span> It <strong>hurts others</strong> — Lies can make people feel sad and confused</li>
+                <li><span class="li-icon">😔</span> It <strong>hurts us too</strong> — Lying gives us a heavy, guilty feeling inside</li>
+                <li><span class="li-icon">🔗</span> It <strong>grows bigger</strong> — One lie often leads to more lies</li>
+            </ul>
+        </div>
+
+        <div class="lesson-card card-green">
+            <div class="lesson-card-icon">🗺️</div>
+            <h3>What We'll Do Together</h3>
+            <div class="roadmap">
+                <div class="roadmap-step">
+                    <span class="step-num">1</span>
+                    <div>
+                        <strong>Listen to a Story</strong>
+                        <p>About a child named Sam who faces a tough choice</p>
+                    </div>
+                </div>
+                <div class="roadmap-step">
+                    <span class="step-num">2</span>
+                    <div>
+                        <strong>Make Choices Together</strong>
+                        <p>Should Sam tell the truth or tell a lie?</p>
+                    </div>
+                </div>
+                <div class="roadmap-step">
+                    <span class="step-num">3</span>
+                    <div>
+                        <strong>Answer a Fun Quiz</strong>
+                        <p>7 questions — I'll point at someone to answer!</p>
+                    </div>
+                </div>
+                <div class="roadmap-step">
+                    <span class="step-num">4</span>
+                    <div>
+                        <strong>See Our Team Score</strong>
+                        <p>Let's see how we did as a group!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lesson-prayer">
+            <span class="prayer-icon">🙏</span>
+            <p><strong>Let's pray together before we start:</strong></p>
+            <p class="prayer-text">"Dear Jesus, open our hearts to learn about truth today. Help us to be brave and honest, just like You. Amen."</p>
+        </div>
+
+        <button class="btn btn-go btn-xl wiggle" onclick="startStory()">
+            📖 Let's Hear the Story!
+        </button>
+    </div>
+</div>
+
+<!-- ==================== PAGE 3: STORY ==================== -->
+<div id="storyPage" class="page">
+    <div class="container">
+        <div class="story-header">
+            <span class="story-header-icon">📖</span>
+            <h1>Story Time</h1>
+        </div>
+        <h2 id="storyTitle" class="story-title"></h2>
+        <p id="storyIntro" class="story-intro"></p>
+
+        <div id="sceneCard" class="card scene-card-styled">
+            <span class="scene-badge" id="sceneBadge"></span>
+            <div class="scene-character" id="sceneCharacter"></div>
+            <p id="sceneText" class="scene-text"></p>
+
+            <div id="sceneChoice" class="choice-prompt" style="display:none"></div>
+
+            <div id="choiceButtons" class="choice-buttons" style="display:none">
+                <button class="btn btn-truth btn-choice" onclick="showOutcome('truth')">
+                    <span class="choice-emoji">💙</span>
+                    <span>Sam Tells the Truth</span>
+                </button>
+                <button class="btn btn-lie btn-choice" onclick="showOutcome('lie')">
+                    <span class="choice-emoji">💔</span>
+                    <span>Sam Tells a Lie</span>
+                </button>
+            </div>
+
+            <div id="outcomeBox" style="display:none"></div>
+        </div>
+
+        <div id="versesSection" class="verses-section" style="display:none">
+            <h3>📜 Bible Verses to Remember</h3>
+            <div id="versesList"></div>
+        </div>
+
+        <div id="moralSection" class="moral-section" style="display:none">
+            <h3>💡 The Big Lesson</h3>
+            <p id="moralText"></p>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn btn-nav" id="btnPrev" onclick="prevScene()">⬅ Back</button>
+            <button class="btn btn-nav btn-go" id="btnNext" onclick="nextScene()">Next ➡</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 4: DISCUSSION ==================== -->
+<div id="discussPage" class="page">
+    <div class="container">
+        <div class="discuss-header">
+            <span class="discuss-icon bounce">💬</span>
+            <h1>Let's Talk About It!</h1>
+            <p class="discuss-sub">Before we take the quiz, let's think about Sam's story together.</p>
+        </div>
+
+        <div class="discuss-tip">
+            <span>💡</span>
+            <p><strong>Leader tip:</strong> Read each question aloud. Let a few children answer first, then tap "Show Suggested Answer" to wrap up each one.</p>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="discuss-card card-warm">
+            <div class="discuss-q">
+                <span class="dq-num">1</span>
+                <p>Has anyone ever been in a situation like Sam's — where you broke something or made a mistake and had to decide whether to tell the truth?</p>
+            </div>
+            <button class="btn btn-reveal" onclick="revealDiscuss(1)">👀 Show Suggested Answer</button>
+            <div class="discuss-answer" id="discussAns1" style="display:none">
+                <p>It's normal to feel scared when we make a mistake. But that's exactly when <strong>choosing truth matters most</strong> — we might face consequences, but we keep something more valuable: <strong>trust</strong>.</p>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="discuss-card card-warm">
+            <div class="discuss-q">
+                <span class="dq-num">2</span>
+                <p>How do you feel inside when you tell a lie? How about when you tell the truth — even when it's hard?</p>
+            </div>
+            <button class="btn btn-reveal" onclick="revealDiscuss(2)">👀 Show Suggested Answer</button>
+            <div class="discuss-answer" id="discussAns2" style="display:none">
+                <p>Lying gives us a <strong>heavy, guilty feeling</strong> — like a weight on our chest. Telling the truth feels scary at first, but then comes a <strong>warm peace inside</strong> — that's God saying <em>"You did the right thing."</em></p>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="discuss-card card-warm">
+            <div class="discuss-q">
+                <span class="dq-num">3</span>
+                <p>Why do you think God made "Do not lie" one of the Ten Commandments? Why is it so important to Him?</p>
+            </div>
+            <button class="btn btn-reveal" onclick="revealDiscuss(3)">👀 Show Suggested Answer</button>
+            <div class="discuss-answer" id="discussAns3" style="display:none">
+                <p>Because <strong>God is truth</strong>, and lying destroys the relationships He created us to enjoy. Truth is the <strong>foundation of love and trust</strong> — without it, friendships and families break apart.</p>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="discuss-card card-warm">
+            <div class="discuss-q">
+                <span class="dq-num">4</span>
+                <p>Jesus said "I am the truth." What do you think that means for us when we follow Him?</p>
+            </div>
+            <button class="btn btn-reveal" onclick="revealDiscuss(4)">👀 Show Suggested Answer</button>
+            <div class="discuss-answer" id="discussAns4" style="display:none">
+                <p>It means <strong>everything about Jesus is real and trustworthy</strong> — He never lied and never broke a promise. When we follow Him, we choose to be <strong>truth-tellers</strong> just like He is.</p>
+            </div>
+        </div>
+
+        <button class="btn btn-go btn-xl wiggle" onclick="startQuiz()">
+            🧠 Now Let's Take the Quiz!
+        </button>
+    </div>
+</div>
+
+<!-- ==================== PAGE 5: QUIZ ==================== -->
+<div id="quizPage" class="page">
+    <div class="container">
+        <div class="quiz-header">
+            <span class="quiz-header-icon bounce">🧠</span>
+            <h1>Truth or Lie Quiz</h1>
+            <p class="quiz-subtitle">Let's see what we learned together, Adventurers!</p>
+        </div>
+
+        <div class="streak-bar" id="streakBar" style="display:none">
+            <span id="streakText"></span>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+        <p class="progress-label" id="progressLabel"></p>
+
+        <div class="card quiz-card-styled" id="quizCard">
+            <div class="question-badge" id="questionNum"></div>
+            <h3 id="questionText" class="question-text"></h3>
+
+            <!-- Countdown overlay -->
+            <div id="countdownOverlay" class="countdown-overlay" style="display:none">
+                <p class="countdown-label">Think about it...</p>
+                <span class="countdown-number" id="countdownNum">3</span>
+            </div>
+
+            <div id="optionsList" class="options-list"></div>
+            <div id="explanationBox"></div>
+        </div>
+
+        <div class="quiz-encouragement" id="quizEncouragement"></div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 5: RESULTS ==================== -->
+<div id="resultsPage" class="page">
+    <div class="container">
+        <div id="resultsHeader">
+            <span class="results-trophy bounce">🏆</span>
+            <h1>Amazing Job, Adventurers!</h1>
+        </div>
+
+        <div class="score-ring" id="scoreRing">
+            <span class="score-num" id="scoreNum">0%</span>
+        </div>
+        <div class="score-stars" id="scoreStars"></div>
+
+        <h2 id="resultMessage" class="result-message"></h2>
+        <p id="resultEncouragement" class="result-encouragement"></p>
+
+        <!-- Badge earned -->
+        <div class="badge-earned" id="badgeEarned">
+            <span class="badge-icon" id="badgeIcon"></span>
+            <h3 id="badgeTitle"></h3>
+            <p id="badgeDesc"></p>
+        </div>
+
+        <div class="card verse-card-styled" id="resultVerse"></div>
+
+        <div id="feedbackList" class="feedback-list"></div>
+
+        <div class="result-actions">
+            <button class="btn btn-go btn-xl wiggle" onclick="goToMemoryVerse()">📜 Memory Verse Challenge!</button>
+            <button class="btn btn-truth" onclick="restartQuiz()">🔄 Try the Quiz Again</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 7: MEMORY VERSE CHALLENGE ==================== -->
+<div id="memoryPage" class="page">
+    <div class="container">
+        <div class="memory-header">
+            <span class="memory-icon bounce">📜</span>
+            <h1>Memory Verse Challenge!</h1>
+            <p class="memory-sub">Can we fill in the missing words together? Let's try!</p>
+        </div>
+
+        <!-- Verse 1 -->
+        <div class="memory-card" id="memoryCard1">
+            <span class="memory-badge">Verse 1</span>
+            <h3>Exodus 20:16</h3>
+            <p class="memory-verse" id="verse1Display"></p>
+            <button class="btn btn-go" id="reveal1" onclick="revealVerse(1)">👀 Reveal the Answer!</button>
+            <div class="memory-revealed" id="revealed1" style="display:none">
+                <p>"You shall not give <strong>false testimony</strong> against your <strong>neighbor</strong>."</p>
+            </div>
+        </div>
+
+        <!-- Verse 2 -->
+        <div class="memory-card" id="memoryCard2">
+            <span class="memory-badge">Verse 2</span>
+            <h3>John 14:6</h3>
+            <p class="memory-verse" id="verse2Display"></p>
+            <button class="btn btn-go" id="reveal2" onclick="revealVerse(2)">👀 Reveal the Answer!</button>
+            <div class="memory-revealed" id="revealed2" style="display:none">
+                <p>"Jesus answered, 'I am the <strong>way</strong> and the <strong>truth</strong> and the <strong>life</strong>. No one comes to the <strong>Father</strong> except through me.'"</p>
+            </div>
+        </div>
+
+        <!-- Bonus: Say it together -->
+        <div class="memory-challenge">
+            <span class="challenge-icon">🏆</span>
+            <h3>Bonus Challenge!</h3>
+            <p>Can everyone say <strong>John 14:6</strong> together from memory? Let's try it three times!</p>
+            <div class="attempt-tracker">
+                <button class="btn btn-attempt" id="attempt1" onclick="markAttempt(1)">Try 1</button>
+                <button class="btn btn-attempt" id="attempt2" onclick="markAttempt(2)">Try 2</button>
+                <button class="btn btn-attempt" id="attempt3" onclick="markAttempt(3)">Try 3</button>
+            </div>
+        </div>
+
+        <button class="btn btn-go btn-xl wiggle" onclick="goToPledge()">
+            ✋ Take the Truth Pledge!
+        </button>
+    </div>
+</div>
+
+<!-- ==================== PAGE 8: TRUTH PLEDGE ==================== -->
+<div id="pledgePage" class="page">
+    <div class="container">
+        <div class="pledge-header">
+            <span class="pledge-icon bounce">✋</span>
+            <h1>The Truth Pledge</h1>
+            <p class="pledge-sub">Stand up, raise your right hand, and let's say this together!</p>
+        </div>
+
+        <div class="pledge-card">
+            <p class="pledge-line" id="pledgeLine1">I promise to <strong>tell the truth</strong>,</p>
+            <p class="pledge-line" id="pledgeLine2">even when it's <strong>hard</strong>,</p>
+            <p class="pledge-line" id="pledgeLine3">even when I'm <strong>scared</strong>,</p>
+            <p class="pledge-line" id="pledgeLine4">because I follow <strong>Jesus</strong>,</p>
+            <p class="pledge-line" id="pledgeLine5">and Jesus <strong>is</strong> the Truth.</p>
+            <p class="pledge-line pledge-verse">— John 14:6</p>
+        </div>
+
+        <button class="btn btn-truth btn-xl" id="pledgeReadBtn" onclick="startPledgeRead()">
+            📢 Read It Together — Line by Line!
+        </button>
+
+        <div class="final-prayer" id="closingPrayer" style="display:none">
+            <span class="prayer-icon">🙏</span>
+            <p><strong>Let's close in prayer together:</strong></p>
+            <p class="prayer-text">"Dear Jesus, thank You for teaching us about truth today. Help us to always be honest and brave, even when it's hard. We want to follow You because You are the Way, the Truth, and the Life. We love You! Amen."</p>
+        </div>
+
+        <div class="final-actions" id="finalActions" style="display:none">
+            <div class="final-message">
+                <span class="final-star">🌟</span>
+                <h2>Great Job, Adventurers!</h2>
+                <p>You are <strong>Truth Champions</strong> who follow Jesus! Remember — always choose truth!</p>
+            </div>
+            <div class="result-actions">
+                <button class="btn btn-truth" onclick="restartStory()">📖 Hear the Story Again</button>
+                <button class="btn btn-go" onclick="restartQuiz()">🧠 Retake the Quiz</button>
+                <button class="btn btn-nav" onclick="goHome()">🏠 Back to Start</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
