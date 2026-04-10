@@ -264,12 +264,35 @@ var encouragements = [
 
 // ===== FULL SCREEN =====
 function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(function () {});
+    var elem = document.documentElement;
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen(); // Safari
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen(); // IE/Edge
+        }
     } else {
-        document.exitFullscreen();
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
     }
 }
+
+// Attach fullscreen listener after DOM loads
+document.addEventListener('DOMContentLoaded', function () {
+    var fsBtn = document.querySelector('.btn-fullscreen');
+    if (fsBtn) {
+        fsBtn.addEventListener('click', function () {
+            toggleFullscreen();
+        });
+    }
+});
 
 // ===== PAGE SWITCHING =====
 function showPage(id) {
