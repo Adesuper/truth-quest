@@ -73,6 +73,27 @@ function soundPledgeLine() {
     setTimeout(function () { playTone(554, 0.2, 'sine', 0.2); }, 130);
 }
 
+// ===== TEXT-TO-SPEECH =====
+function speakText(text, callback) {
+    try {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel(); // stop any current speech
+            var utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.85; // slightly slower for kids
+            utterance.pitch = 1.1; // slightly higher, friendly tone
+            utterance.volume = 1.0;
+            if (callback) {
+                utterance.onend = callback;
+            }
+            window.speechSynthesis.speak(utterance);
+        } else if (callback) {
+            callback(); // fallback if speech not supported
+        }
+    } catch (e) {
+        if (callback) callback();
+    }
+}
+
 // ===== EMBEDDED STORY DATA =====
 var storyData = {
     title: "Sam and the Broken Vase \u2014 A Story About Telling the Truth",
@@ -700,23 +721,42 @@ function goToPledge() {
     showPage('pledgePage');
 }
 
+var pledgeLines = [
+    'I promise to tell the truth,',
+    'even when it\'s hard,',
+    'even when I\'m scared,',
+    'because I follow Jesus,',
+    'and Jesus is the Truth.'
+];
+var pledgeSpeaking = false;
+
 function startPledgeRead() {
     pledgeLineIndex = 0;
-    highlightPledgeLine();
+    pledgeSpeaking = false;
+    speakAndHighlight();
     document.getElementById('pledgeReadBtn').textContent = '👉 Next Line';
     document.getElementById('pledgeReadBtn').onclick = nextPledgeLine;
 }
 
-function highlightPledgeLine() {
+function speakAndHighlight() {
+    // Highlight current line
     for (var i = 1; i <= 5; i++) {
         document.getElementById('pledgeLine' + i).classList.remove('active');
     }
     if (pledgeLineIndex < 5) {
         document.getElementById('pledgeLine' + (pledgeLineIndex + 1)).classList.add('active');
+        // Read the line out loud
+        pledgeSpeaking = true;
+        speakText(pledgeLines[pledgeLineIndex], function () {
+            pledgeSpeaking = false;
+        });
     }
 }
 
 function nextPledgeLine() {
+    // Don't advance while still speaking
+    if (pledgeSpeaking) return;
+
     if (pledgeLineIndex < 5) {
         document.getElementById('pledgeLine' + (pledgeLineIndex + 1)).classList.remove('active');
         document.getElementById('pledgeLine' + (pledgeLineIndex + 1)).classList.add('read');
@@ -724,7 +764,7 @@ function nextPledgeLine() {
     }
     pledgeLineIndex++;
     if (pledgeLineIndex < 5) {
-        highlightPledgeLine();
+        speakAndHighlight();
     } else {
         document.getElementById('pledgeReadBtn').style.display = 'none';
         document.getElementById('closingPrayer').style.display = '';
